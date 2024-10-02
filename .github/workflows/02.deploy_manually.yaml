@@ -1,0 +1,49 @@
+name: 02. Deploy Manually
+
+permissions:
+  id-token: write
+  contents: read
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+
+jobs:
+  deploy-production:
+    name: Deploy to production
+    if: ${{ github.event.inputs.environment == 'production' }}
+    concurrency:
+      group: production_environment
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://jetrockets.com
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+
+      - uses: ./.github/workflows/setup
+        name: Setup
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Kamal Deploy
+        uses: ./.github/workflows/kamal-deploy
+        with:
+          kamal-registry-username: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
+          kamal-registry-password: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
+          database-url: ${{ secrets.DATABASE_URL }}
+          redis-url: ${{ secrets.REDIS_URL }}
+          rails-master-key: ${{ secrets.RAILS_MASTER_KEY }}
+          environment: production
+
