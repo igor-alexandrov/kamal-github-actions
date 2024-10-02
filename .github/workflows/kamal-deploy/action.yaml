@@ -19,6 +19,12 @@ inputs:
   rails-master-key:
     description: Rails Master Key
     required: true
+  pg-hero-username:
+    description: PG Hero Username
+    required: true
+  pg-hero-password:
+    description: PG Hero Password
+    required: true
 
 runs:
   using: composite

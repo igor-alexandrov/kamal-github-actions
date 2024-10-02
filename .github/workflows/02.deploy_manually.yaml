@@ -45,5 +45,7 @@ jobs:
           database-url: ${{ secrets.DATABASE_URL }}
           redis-url: ${{ secrets.REDIS_URL }}
           rails-master-key: ${{ secrets.RAILS_MASTER_KEY }}
+          pg-hero-username: ${{ secrets.PGHERO_USERNAME }}
+          pg-hero-password: ${{ secrets.PGHERO_PASSWORD }}
           environment: production
 
