@@ -12,8 +12,7 @@ on:
         required: true
         type: choice
         options:
-          # - traefik reboot --rolling
-          - proxy reboot --rolling
+          - proxy reboot --rolling -y
           - upgrade -y
       environment:
         description: 'Environment'
