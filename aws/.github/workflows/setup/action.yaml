@@ -11,7 +11,7 @@ inputs:
 outputs:
   kamal-registry-password:
     description: Kamal Registry Password
-    value: ${{ steps.login-ecr.outputs.docker_password_<YOUR_AWS_ACCOUNT_ID>_dkr_ecr_us_east_1_amazonaws_com }}
+    value: ${{ steps.login-ecr.outputs.docker_password_<%= AWS_ACCOUNT_ID %>_dkr_ecr_us_east_1_amazonaws_com }}
 
 runs:
   using: composite
