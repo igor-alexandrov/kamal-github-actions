@@ -1,6 +1,6 @@
-# Kamal GitHub Actions DigitalOcean
+# Kamal GitHub Actions
 
-Sample GitHub Actions workflow files to deploy with Kamal 2 to Digital Ocean
+A collection of GitHub Actions workflows to work with Kamal 2
 
 ## Structure
 
