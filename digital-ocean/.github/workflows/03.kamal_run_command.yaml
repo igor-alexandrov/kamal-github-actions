@@ -13,7 +13,8 @@ on:
         type: choice
         options:
           - proxy reboot --rolling -y
-          - upgrade -y
+          - upgrade --rolling -y
+          # - downgrade --rolling -y
       environment:
         description: 'Environment'
         required: true
