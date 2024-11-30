@@ -1,0 +1,14 @@
+# Deploy to these servers.
+servers:
+  web:
+    hosts:
+      - <%= SERVER_IP %>
+
+  # sidekiq:
+  #   cmd: bin/sidekiq
+  #   hosts:
+  #     - <%= SERVER_IP %>
+
+builder:
+  args:
+    RAILS_ENV: production

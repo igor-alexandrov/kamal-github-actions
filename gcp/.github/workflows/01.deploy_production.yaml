@@ -1,0 +1,46 @@
+name: 01. Deploy to Production
+
+permissions:
+  id-token: write
+  contents: read
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  build_and_deploy:
+    name: deploy-production
+    concurrency:
+      group: production_environment
+      cancel-in-progress: true
+    environment:
+      name:  production
+      url: https://jetrockets.com
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+
+      - name: Setup
+        uses: ./.github/workflows/setup
+        id: setup
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          gcp_credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+          gcp_registry_username: '<gcp_user>'
+
+      - name: Kamal Deploy
+        uses: igor-alexandrov/kamal-deploy@v0.1.3
+        with:
+          registry-username: '<gcp_user>'
+          registry-password: ${{ steps.setup.outputs.kamal-registry-password }}
+          environment: production
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
