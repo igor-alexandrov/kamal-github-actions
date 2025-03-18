@@ -38,14 +38,14 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Kamal Deploy
-        uses: ./.github/workflows/kamal-deploy
+        uses: igor-alexandrov/kamal-deploy@v0.4.1
         with:
-          kamal-registry-username: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
-          kamal-registry-password: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
-          database-url: ${{ secrets.DATABASE_URL }}
-          redis-url: ${{ secrets.REDIS_URL }}
-          rails-master-key: ${{ secrets.RAILS_MASTER_KEY }}
-          pg-hero-username: ${{ secrets.PGHERO_USERNAME }}
-          pg-hero-password: ${{ secrets.PGHERO_PASSWORD }}
+          registry-username: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
+          registry-password: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
           environment: production
-
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          PGHERO_USERNAME: ${{ secrets.PGHERO_USERNAME }}
+          PGHERO_PASSWORD: ${{ secrets.PGHERO_PASSWORD }}
